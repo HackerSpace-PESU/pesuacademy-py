@@ -6,10 +6,6 @@ from bs4 import BeautifulSoup
 from pesu_academy.models import Profile
 
 
-def get_personal_details(soup: BeautifulSoup) -> dict:
-    pass
-
-
 def get_profile_page(session: requests_html.HTMLSession) -> Profile:
     try:
         profile_url = "https://www.pesuacademy.com/Academy/s/studentProfilePESUAdmin"

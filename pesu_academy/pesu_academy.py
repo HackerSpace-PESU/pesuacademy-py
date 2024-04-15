@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 from .exceptions import CSRFTokenError, AuthenticationError
 from .models import Profile
-from .pages import profile
+from .pages import profile, courses
 
 
 class PESUAcademy:
@@ -22,6 +22,14 @@ class PESUAcademy:
         self.__session = requests_html.HTMLSession()
         self._authenticated: bool = False
         self._csrf_token: str = self.generate_csrf_token(username, password)
+
+    @property
+    def csrf_token(self):
+        return self._csrf_token
+
+    @property
+    def session(self):
+        return self.__session
 
     def generate_csrf_token(self, username: Optional[str] = None, password: Optional[str] = None) -> str:
         """
@@ -101,7 +109,7 @@ class PESUAcademy:
         for th, td in zip(soup.find_all("th"), soup.find_all("td")):
             key = th.text.strip()
             value = td.text.strip()
-            profile.__setattr__(key, value)
+            setattr(profile, key, value)
 
         return profile
 
@@ -114,3 +122,14 @@ class PESUAcademy:
             raise AuthenticationError("You need to authenticate first.")
         profile_info = profile.get_profile_page(self.__session)
         return profile_info
+
+    def courses(self, semester: Optional[int] = None):
+        """
+        Get the courses of the currently authenticated user.
+        :param semester: The semester number. If not provided, all courses across all semesters are returned.
+        :return: The course information for the given semester.
+        """
+        if not self._authenticated:
+            raise AuthenticationError("You need to authenticate first.")
+        courses_info = courses.get_courses_page(self.__session, self._csrf_token, semester)
+        return courses_info
