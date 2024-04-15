@@ -76,4 +76,6 @@ def get_courses_page(session: requests_html.HTMLSession, csrf_token: str, semest
         if semester is None or current_semester == semester:
             courses_in_semester = get_courses_in_semester(session, current_value)
             courses[current_semester] = courses_in_semester
+
+    courses = dict(sorted(courses.items()))
     return courses

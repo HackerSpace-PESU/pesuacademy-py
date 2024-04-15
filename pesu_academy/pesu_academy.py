@@ -23,6 +23,14 @@ class PESUAcademy:
         self._authenticated: bool = False
         self._csrf_token: str = self.generate_csrf_token(username, password)
 
+    @property
+    def csrf_token(self):
+        return self._csrf_token
+
+    @property
+    def session(self):
+        return self.__session
+
     def generate_csrf_token(self, username: Optional[str] = None, password: Optional[str] = None) -> str:
         """
         Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.
@@ -101,7 +109,7 @@ class PESUAcademy:
         for th, td in zip(soup.find_all("th"), soup.find_all("td")):
             key = th.text.strip()
             value = td.text.strip()
-            profile.__setattr__(key, value)
+            setattr(profile, key, value)
 
         return profile
 
