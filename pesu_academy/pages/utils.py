@@ -34,6 +34,7 @@ def get_semester_list(session: requests_html.HTMLSession, csrf_token: str, semes
     option_tags = BeautifulSoup(option_tags, "lxml")
     option_tags = option_tags.find_all("option")
     semester_string_ids = list(map(lambda x: x.attrs["value"], option_tags))
+    # TODO: Handle CIE semesters (sometimes the tag is <option value="972">CIE - Level2 (Odd Sem)</option>
     semester_numbers = list(map(lambda x: int(x.text.split("Sem-")[1]), option_tags))
     semesters = dict(zip(semester_numbers, semester_string_ids))
     return semesters
