@@ -25,14 +25,6 @@ class PESUAcademy:
         self._csrf_token: str = self.generate_csrf_token(username, password)
 
     @property
-    def csrf_token(self):
-        return self._csrf_token
-
-    @property
-    def session(self):
-        return self.__session
-
-    @property
     def authenticated(self):
         return self._authenticated
 
