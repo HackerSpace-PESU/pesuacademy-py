@@ -1,2 +1,2 @@
-from .course import Course
+from .course import Course, Attendance
 from .profile import Profile

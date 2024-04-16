@@ -4,8 +4,8 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from .exceptions import CSRFTokenError, AuthenticationError
-from .models import Profile
-from .pages import profile, courses
+from .models import Profile, Course
+from .pages import profile, courses, attendance, utils
 
 
 class PESUAcademy:
@@ -21,15 +21,21 @@ class PESUAcademy:
         """
         self.__session = requests_html.HTMLSession()
         self._authenticated: bool = False
+        self._semester_ids = dict()
         self._csrf_token: str = self.generate_csrf_token(username, password)
 
     @property
-    def csrf_token(self):
-        return self._csrf_token
+    def authenticated(self):
+        return self._authenticated
 
-    @property
-    def session(self):
-        return self.__session
+    def get_semester_ids_from_semester_number(self, semester: Optional[int] = None) -> dict:
+        """
+        Get the semester ids from the semester number. If semester is not provided, all semester ids are returned.
+        :param semester: The semester number.
+        :return:
+        """
+        assert semester is None or 1 <= semester <= 8, "Semester number should be between 1 and 8."
+        return self._semester_ids if semester is None else {semester: self._semester_ids[semester]}
 
     def generate_csrf_token(self, username: Optional[str] = None, password: Optional[str] = None) -> str:
         """
@@ -69,6 +75,7 @@ class PESUAcademy:
             # if login is successful, update the CSRF token
             csrf_token = soup.find("meta", attrs={"name": "csrf-token"})["content"]
             self._authenticated = True
+            self._semester_ids = utils.get_semester_list(self.__session, csrf_token)
 
         return csrf_token
 
@@ -113,7 +120,7 @@ class PESUAcademy:
 
         return profile
 
-    def profile(self):
+    def profile(self) -> Profile:
         """
         Get the private profile information of the currently authenticated user.
         :return: The profile information.
@@ -123,7 +130,7 @@ class PESUAcademy:
         profile_info = profile.get_profile_page(self.__session)
         return profile_info
 
-    def courses(self, semester: Optional[int] = None):
+    def courses(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
         """
         Get the courses of the currently authenticated user.
         :param semester: The semester number. If not provided, all courses across all semesters are returned.
@@ -131,5 +138,18 @@ class PESUAcademy:
         """
         if not self._authenticated:
             raise AuthenticationError("You need to authenticate first.")
-        courses_info = courses.get_courses_page(self.__session, self._csrf_token, semester)
+        semester_ids = self.get_semester_ids_from_semester_number(semester)
+        courses_info = courses.get_courses_page(self.__session, semester_ids)
         return courses_info
+
+    def attendance(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
+        """
+        Get the attendance in courses of the currently authenticated user.
+        :param semester: The semester number. If not provided, attendance across all semesters are returned.
+        :return: The attendance information for the given semester.
+        """
+        if not self._authenticated:
+            raise AuthenticationError("You need to authenticate first.")
+        semester_ids = self.get_semester_ids_from_semester_number(semester)
+        attendance_info = attendance.get_attendance_page(self.__session, semester_ids)
+        return attendance_info
