@@ -5,7 +5,6 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from pesu_academy.models import Course, Attendance
-from pesu_academy.pages.utils import get_semester_list
 
 
 def get_attendance_in_semester(session: requests_html.HTMLSession, semester_value: Optional[int] = None):
@@ -46,14 +45,13 @@ def get_attendance_in_semester(session: requests_html.HTMLSession, semester_valu
     return attendance
 
 
-def get_attendance_page(session: requests_html.HTMLSession, csrf_token: str, semester: Optional[int] = None) -> dict[
-    int, list[Course]]:
-    semesters = get_semester_list(session, csrf_token, semester)
+def get_attendance_page(
+        session: requests_html.HTMLSession,
+        semester_ids: dict
+) -> dict[int, list[Course]]:
     attendance = dict()
-    for current_semester in semesters:
-        if semester is None or current_semester == semester:
-            attendance_in_semester = get_attendance_in_semester(session, semesters[current_semester])
-            attendance[current_semester] = attendance_in_semester
-
+    for semester_number in semester_ids:
+        attendance_in_semester = get_attendance_in_semester(session, semester_ids[semester_number])
+        attendance[semester_number] = attendance_in_semester
     attendance = dict(sorted(attendance.items()))
     return attendance

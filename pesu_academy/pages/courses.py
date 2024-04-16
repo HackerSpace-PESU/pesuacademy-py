@@ -5,7 +5,6 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from pesu_academy.models import Course
-from pesu_academy.pages.utils import get_semester_list
 
 
 def get_courses_in_semester(session: requests_html.HTMLSession, semester_id: Optional[int] = None):
@@ -41,14 +40,13 @@ def get_courses_in_semester(session: requests_html.HTMLSession, semester_id: Opt
     return courses
 
 
-def get_courses_page(session: requests_html.HTMLSession, csrf_token: str, semester: Optional[int] = None) -> dict[
-    int, list[Course]]:
-    semesters = get_semester_list(session, csrf_token, semester)
+def get_courses_page(
+        session: requests_html.HTMLSession,
+        semester_ids: dict
+) -> dict[int, list[Course]]:
     courses = dict()
-    for current_semester in semesters:
-        if semester is None or current_semester == semester:
-            courses_in_semester = get_courses_in_semester(session, semesters[current_semester])
-            courses[current_semester] = courses_in_semester
-
+    for semester_number in semester_ids:
+        courses_in_semester = get_courses_in_semester(session, semester_ids[semester_number])
+        courses[semester_number] = courses_in_semester
     courses = dict(sorted(courses.items()))
     return courses
