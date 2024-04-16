@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 
 from .exceptions import CSRFTokenError, AuthenticationError
 from .models import Profile
-from .pages import profile, courses
+from .pages import profile, courses, attendance
 
 
 class PESUAcademy:
@@ -133,3 +133,14 @@ class PESUAcademy:
             raise AuthenticationError("You need to authenticate first.")
         courses_info = courses.get_courses_page(self.__session, self._csrf_token, semester)
         return courses_info
+
+    def attendance(self, semester: Optional[int] = None):
+        """
+        Get the attendance in courses of the currently authenticated user.
+        :param semester: The semester number. If not provided, attendance across all semesters are returned.
+        :return: The attendance information for the given semester.
+        """
+        if not self._authenticated:
+            raise AuthenticationError("You need to authenticate first.")
+        attendance_info = attendance.get_attendance_page(self.__session, self._csrf_token, semester)
+        return attendance_info
