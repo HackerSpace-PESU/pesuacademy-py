@@ -31,4 +31,6 @@ from pesuacademy import PESUAcademy
 
 p = PESUAcademy("PRN_or_SRN", "password")
 profile = p.profile()
+courses = p.courses(semester=2)
+attendance = p.attendance()
 ```
