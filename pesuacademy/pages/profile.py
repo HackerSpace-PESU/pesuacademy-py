@@ -3,7 +3,7 @@ import datetime
 import requests_html
 from bs4 import BeautifulSoup
 
-from pesu_academy.models import Profile
+from pesuacademy.models import Profile
 
 
 def get_profile_page(session: requests_html.HTMLSession) -> Profile:

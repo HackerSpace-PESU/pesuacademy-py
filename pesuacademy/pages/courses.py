@@ -4,7 +4,7 @@ from typing import Optional
 import requests_html
 from bs4 import BeautifulSoup
 
-from pesu_academy.models import Course
+from pesuacademy.models import Course
 
 
 def get_courses_in_semester(session: requests_html.HTMLSession, semester_id: Optional[int] = None):
