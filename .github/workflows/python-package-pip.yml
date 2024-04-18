@@ -1,4 +1,4 @@
-name: Python Version Compatibility
+name: Python Package using Pip 
 
 on: [push, pull_request]
 
