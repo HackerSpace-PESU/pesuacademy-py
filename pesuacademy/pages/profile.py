@@ -11,7 +11,9 @@ class ProfilePageHandler:
     @staticmethod
     def get_page(session: requests_html.HTMLSession) -> Profile:
         try:
-            profile_url = "https://www.pesuacademy.com/Academy/s/studentProfilePESUAdmin"
+            profile_url = (
+                "https://www.pesuacademy.com/Academy/s/studentProfilePESUAdmin"
+            )
             query = {
                 "menuId": "670",
                 "url": "studentProfilePESUAdmin",

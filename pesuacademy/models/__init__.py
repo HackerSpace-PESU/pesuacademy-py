@@ -7,5 +7,5 @@ from .profile import (
     ParentDetails,
     ParentInformation,
     AddressDetails,
-    QualifyingExamination
+    QualifyingExamination,
 )
