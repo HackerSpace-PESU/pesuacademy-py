@@ -4,7 +4,7 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from pesuacademy import util
-from pesuacademy.handler import PageHandler
+from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
 from .models import Profile, ClassAndSectionInfo, Course
 
@@ -31,10 +31,12 @@ class PESUAcademy:
     def authenticated(self):
         return self._authenticated
 
-    def generate_csrf_token(self, username: Optional[str] = None, password: Optional[str] = None) -> str:
+    def generate_csrf_token(
+        self, username: Optional[str] = None, password: Optional[str] = None
+    ) -> str:
         """
         Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.
-        
+
         :param username: Your SRN, PRN or email address.
         :param password: Your password.
         :return: The CSRF token.
@@ -47,7 +49,9 @@ class PESUAcademy:
             csrf_token = soup.find("meta", attrs={"name": "csrf-token"})["content"]
         except Exception:
             self.__session.close()
-            raise CSRFTokenError("Unable to fetch default csrf token. Please try again later.")
+            raise CSRFTokenError(
+                "Unable to fetch default csrf token. Please try again later."
+            )
 
         if username and password:
             # Prepare the login data for auth call
@@ -62,12 +66,16 @@ class PESUAcademy:
                 soup = BeautifulSoup(response.text, "lxml")
             except Exception as e:
                 self.__session.close()
-                raise AuthenticationError("Unable to authenticate. Please check your credentials.")
+                raise AuthenticationError(
+                    "Unable to authenticate. Please check your credentials."
+                )
 
             # if class login-form is present, login failed
             if soup.find("div", attrs={"class": "login-form"}):
                 self.__session.close()
-                raise AuthenticationError("Invalid username or password, or the user does not exist.")
+                raise AuthenticationError(
+                    "Invalid username or password, or the user does not exist."
+                )
 
             # if login is successful, update the CSRF token
             csrf_token = soup.find("meta", attrs={"name": "csrf-token"})["content"]
@@ -100,17 +108,17 @@ class PESUAcademy:
                     "sec-fetch-mode": "cors",
                     "sec-fetch-site": "same-origin",
                     "x-csrf-token": self._csrf_token,
-                    "x-requested-with": "XMLHttpRequest"
+                    "x-requested-with": "XMLHttpRequest",
                 },
-                data={
-                    "loginId": username
-                }
+                data={"loginId": username},
             )
         except Exception:
             raise ValueError("Unable to get profile from Know Your Class and Section.")
 
         soup = BeautifulSoup(response.text, "html.parser")
-        profile = util.profile.create_class_and_section_object_from_know_your_class_and_section(soup)
+        profile = util.profile.create_class_and_section_object_from_know_your_class_and_section(
+            soup
+        )
         return profile
 
     def profile(self) -> Profile:
@@ -139,7 +147,7 @@ class PESUAcademy:
     def attendance(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
         """
         Get the attendance in courses of the currently authenticated user.
-        
+
         :param semester: The semester number. If not provided, attendance across all semesters are returned.
         :return: The attendance information for the given semester.
         """
