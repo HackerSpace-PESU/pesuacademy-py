@@ -81,7 +81,7 @@ class QualifyingExamination:
         return f"{self.__dict__}"
 
 
-class ParentDetails:
+class ParentInformation:
     def __init__(
             self,
             name: str,
@@ -100,8 +100,22 @@ class ParentDetails:
         self.designation = designation
         self.employer = employer
 
+
+class ParentDetails:
+    def __init__(
+            self,
+            mother: ParentInformation,
+            father: ParentInformation
+    ):
+        self.mother = mother
+        self.father = father
+
     def __str__(self):
         return f"{self.__dict__}"
+
+
+def __str__(self):
+    return f"{self.__dict__}"
 
 
 class AddressDetails:
@@ -120,13 +134,13 @@ class Profile:
             other_information: OtherInformation,
             qualifying_examination: QualifyingExamination,
             parent_details: ParentDetails,
-            address: AddressDetails
+            address_details: AddressDetails
     ):
         self.personal_details = personal_details
         self.other_information = other_information
         self.qualifying_examination = qualifying_examination
         self.parent_details = parent_details
-        self.address = address
+        self.address_details = address_details
 
     def __str__(self):
         return f"{self.__dict__}"

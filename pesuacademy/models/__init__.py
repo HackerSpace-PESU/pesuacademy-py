@@ -5,6 +5,7 @@ from .profile import (
     PersonalDetails,
     OtherInformation,
     ParentDetails,
+    ParentInformation,
     AddressDetails,
     QualifyingExamination
 )
