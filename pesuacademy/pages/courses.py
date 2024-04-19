@@ -10,7 +10,7 @@ from pesuacademy.models import Course
 class CoursesPageHandler:
     @staticmethod
     def get_courses_in_semester(
-        session: requests_html.HTMLSession, semester_id: Optional[int] = None
+            session: requests_html.HTMLSession, semester_id: Optional[int] = None
     ):
         try:
             url = "https://www.pesuacademy.com/Academy/s/studentProfilePESUAdmin"
@@ -34,8 +34,8 @@ class CoursesPageHandler:
         for row in table_body.find_all("tr"):
             columns = row.find_all("td")
             if (
-                len(columns) == 1
-                and columns[0].text.strip() == "No\n\t\t\t\t\t\tsubjects found"
+                    len(columns) == 1
+                    and columns[0].text.strip() == "No\n\t\t\t\t\t\tsubjects found"
             ):
                 break
             course_code = columns[0].text.strip()
@@ -48,7 +48,7 @@ class CoursesPageHandler:
 
     @staticmethod
     def get_page(
-        session: requests_html.HTMLSession, semester_ids: dict
+            session: requests_html.HTMLSession, semester_ids: dict
     ) -> dict[int, list[Course]]:
         courses = dict()
         for semester_number in semester_ids:

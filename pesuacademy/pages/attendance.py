@@ -10,7 +10,7 @@ from pesuacademy.models import Course, Attendance
 class AttendancePageHandler:
     @staticmethod
     def get_attendance_in_semester(
-        session: requests_html.HTMLSession, semester_value: Optional[int] = None
+            session: requests_html.HTMLSession, semester_value: Optional[int] = None
     ):
         try:
             url = "https://www.pesuacademy.com/Academy/s/studentProfilePESUAdmin"
@@ -34,8 +34,8 @@ class AttendancePageHandler:
         for row in table_body.find_all("tr"):
             columns = row.find_all("td")
             if (
-                len(columns) == 1
-                and columns[0].text.strip() == "Data Not\n\t\t\t\t\tAvailable"
+                    len(columns) == 1
+                    and columns[0].text.strip() == "Data Not\n\t\t\t\t\tAvailable"
             ):
                 break
             course_code = columns[0].text.strip()
@@ -59,7 +59,7 @@ class AttendancePageHandler:
 
     @staticmethod
     def get_page(
-        session: requests_html.HTMLSession, semester_ids: dict
+            session: requests_html.HTMLSession, semester_ids: dict
     ) -> dict[int, list[Course]]:
         attendance = dict()
         for semester_number in semester_ids:

@@ -30,7 +30,7 @@ class PESUAcademy:
         return self._authenticated
 
     def generate_csrf_token(
-        self, username: Optional[str] = None, password: Optional[str] = None
+            self, username: Optional[str] = None, password: Optional[str] = None
     ) -> str:
         """
         Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.

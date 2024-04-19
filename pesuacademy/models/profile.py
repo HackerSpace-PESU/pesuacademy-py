@@ -4,16 +4,16 @@ from typing import Optional
 
 class ClassAndSectionInfo:
     def __init__(
-        self,
-        prn: str,
-        srn: str,
-        name: str,
-        semester: str,
-        section: str,
-        department: str,
-        branch: str,
-        institute: str,
-        cycle: Optional[str] = None,
+            self,
+            prn: str,
+            srn: str,
+            name: str,
+            semester: str,
+            section: str,
+            department: str,
+            branch: str,
+            institute: str,
+            cycle: Optional[str] = None,
     ):
         self.prn = prn
         self.srn = srn
@@ -31,18 +31,18 @@ class ClassAndSectionInfo:
 
 class PersonalDetails:
     def __init__(
-        self,
-        name: str,
-        prn: str,
-        srn: str,
-        branch: str,
-        semester: str,
-        section: str,
-        program: Optional[str] = None,
-        email: Optional[str] = None,
-        mobile: Optional[str] = None,
-        aadhar: Optional[str] = None,
-        name_as_in_aadhar: Optional[str] = None,
+            self,
+            name: str,
+            prn: str,
+            srn: str,
+            branch: str,
+            semester: str,
+            section: str,
+            program: Optional[str] = None,
+            email: Optional[str] = None,
+            mobile: Optional[str] = None,
+            aadhar: Optional[str] = None,
+            name_as_in_aadhar: Optional[str] = None,
     ):
         self.name = name
         self.prn = prn
@@ -83,14 +83,14 @@ class QualifyingExamination:
 
 class ParentInformation:
     def __init__(
-        self,
-        name: str,
-        mobile: str,
-        email: str,
-        occupation: str,
-        qualification: str,
-        designation: str,
-        employer: str,
+            self,
+            name: str,
+            mobile: str,
+            email: str,
+            occupation: str,
+            qualification: str,
+            designation: str,
+            employer: str,
     ):
         self.name = name
         self.mobile = mobile
@@ -125,12 +125,12 @@ class AddressDetails:
 
 class Profile:
     def __init__(
-        self,
-        personal_details: PersonalDetails,
-        other_information: OtherInformation,
-        qualifying_examination: QualifyingExamination,
-        parent_details: ParentDetails,
-        address_details: AddressDetails,
+            self,
+            personal_details: PersonalDetails,
+            other_information: OtherInformation,
+            qualifying_examination: QualifyingExamination,
+            parent_details: ParentDetails,
+            address_details: AddressDetails,
     ):
         self.personal_details = personal_details
         self.other_information = other_information

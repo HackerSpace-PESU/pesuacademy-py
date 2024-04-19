@@ -1,6 +1,6 @@
 import setuptools
 
-VERSION = "0.0.1"
+from pesuacademy import __version__ as VERSION
 
 DESCRIPTION = "Python wrapper and APIs for the PESU Academy website"
 
