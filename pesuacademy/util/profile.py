@@ -70,6 +70,7 @@ def create_personal_details_object_from_profile_page(
     :param soup: The BeautifulSoup object of the page.
     :return: The PersonalDetails object.
     """
+
     personal_details = dict()
     personal_details_section = soup.find(
         "div", attrs={"class": "elem-info-wrapper box-shadow clearfix"}
@@ -111,6 +112,8 @@ def create_personal_details_object_from_profile_page(
         value = None if value == "NA" else value
         personal_details[key] = value
 
+    image_b64_encoded = soup.find("img", attrs={"class": "media-object"})["src"]
+
     return PersonalDetails(
         name=personal_details["name"],
         prn=personal_details["pesu_id"],
@@ -119,6 +122,7 @@ def create_personal_details_object_from_profile_page(
         branch=personal_details["branch"],
         semester=personal_details["semester"],
         section=personal_details["section"],
+        img=image_b64_encoded,
         email=personal_details["email_id"],
         mobile=personal_details["contact_no"],
         aadhar=personal_details["aadhar_no"],
