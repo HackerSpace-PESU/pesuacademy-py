@@ -1,1 +1,3 @@
-from .profile import get_profile_page
+from .attendance import AttendancePageHandler
+from .courses import CoursesPageHandler
+from .profile import ProfilePageHandler

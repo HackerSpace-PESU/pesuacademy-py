@@ -3,9 +3,10 @@ from typing import Optional
 import requests_html
 from bs4 import BeautifulSoup
 
+from pesuacademy import util
+from pesuacademy.handler import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
-from .models import Profile, Course
-from .pages import profile, courses, attendance, utils
+from .models import Profile, ClassAndSectionInfo, Course
 
 
 class PESUAcademy:
@@ -21,25 +22,18 @@ class PESUAcademy:
         """
         self.__session = requests_html.HTMLSession()
         self._authenticated: bool = False
-        self._semester_ids = dict()
+        self.page_handler = PageHandler(self.__session)
         self._csrf_token: str = self.generate_csrf_token(username, password)
 
     @property
     def authenticated(self):
         return self._authenticated
 
-    def get_semester_ids_from_semester_number(self, semester: Optional[int] = None) -> dict:
-        """
-        Get the semester ids from the semester number. If semester is not provided, all semester ids are returned.
-        :param semester: The semester number.
-        :return:
-        """
-        assert semester is None or 1 <= semester <= 8, "Semester number should be between 1 and 8."
-        return self._semester_ids if semester is None else {semester: self._semester_ids[semester]}
-
     def generate_csrf_token(self, username: Optional[str] = None, password: Optional[str] = None) -> str:
         """
         Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.
+        :param username: Your SRN, PRN or email address.
+        :param password: Your password.
         :return: The CSRF token.
         """
         try:
@@ -75,11 +69,11 @@ class PESUAcademy:
             # if login is successful, update the CSRF token
             csrf_token = soup.find("meta", attrs={"name": "csrf-token"})["content"]
             self._authenticated = True
-            self._semester_ids = utils.get_semester_list(self.__session, csrf_token)
+            self.page_handler.set_semester_id_to_number_mapping(csrf_token)
 
         return csrf_token
 
-    def know_your_class_and_section(self, username: str) -> Profile:
+    def know_your_class_and_section(self, username: str) -> ClassAndSectionInfo:
         """
         Get the publicly visible class and section information of a student from the Know Your Class and Section page.
         :param username: The SRN, PRN or email address of the student.
@@ -112,12 +106,7 @@ class PESUAcademy:
             raise ValueError("Unable to get profile from Know Your Class and Section.")
 
         soup = BeautifulSoup(response.text, "html.parser")
-        profile = Profile()
-        for th, td in zip(soup.find_all("th"), soup.find_all("td")):
-            key = th.text.strip()
-            value = td.text.strip()
-            setattr(profile, key, value)
-
+        profile = util.profile.create_class_and_section_object_from_know_your_class_and_section(soup)
         return profile
 
     def profile(self) -> Profile:
@@ -127,7 +116,7 @@ class PESUAcademy:
         """
         if not self._authenticated:
             raise AuthenticationError("You need to authenticate first.")
-        profile_info = profile.get_profile_page(self.__session)
+        profile_info = self.page_handler.get_profile()
         return profile_info
 
     def courses(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
@@ -138,8 +127,7 @@ class PESUAcademy:
         """
         if not self._authenticated:
             raise AuthenticationError("You need to authenticate first.")
-        semester_ids = self.get_semester_ids_from_semester_number(semester)
-        courses_info = courses.get_courses_page(self.__session, semester_ids)
+        courses_info = self.page_handler.get_courses(semester)
         return courses_info
 
     def attendance(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
@@ -150,6 +138,5 @@ class PESUAcademy:
         """
         if not self._authenticated:
             raise AuthenticationError("You need to authenticate first.")
-        semester_ids = self.get_semester_ids_from_semester_number(semester)
-        attendance_info = attendance.get_attendance_page(self.__session, semester_ids)
+        attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
