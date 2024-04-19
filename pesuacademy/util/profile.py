@@ -105,10 +105,8 @@ def create_other_information_object_from_profile_page(soup: BeautifulSoup) -> Ot
     :param soup: The BeautifulSoup object of the page.
     :return: The OtherInformation object.
     """
-    other_information = dict()
     other_information_section = soup.find_all("div", attrs={"class": "dashboard-info-bar box-shadow"})[0]
     other_information = get_data_from_section(other_information_section)
-
     return OtherInformation(
         sslc=float(other_information["sslc_marks"]),
         puc=float(other_information["puc_marks"]),
@@ -164,7 +162,6 @@ def create_address_details_object_from_profile_page(soup: BeautifulSoup) -> Addr
     :param soup: The BeautifulSoup object of the page.
     :return: The AddressDetails object.
     """
-    address_details = dict()
     address_details_section = soup.find_all("div", attrs={"class": "dashboard-info-bar box-shadow"})[2]
     address_details = get_data_from_section(address_details_section)
     return AddressDetails(present=address_details["present_address"], permanent=address_details["permanent_address"])
@@ -176,7 +173,6 @@ def create_profile_object_from_profile_page(soup: BeautifulSoup) -> Profile:
     :param soup: The BeautifulSoup object of the page.
     :return: The Profile object.
     """
-    profile_data = dict()
     personal_details = create_personal_details_object_from_profile_page(soup)
     other_information = create_other_information_object_from_profile_page(soup)
     qualifying_examination = create_qualifying_examination_object_from_profile_page(soup)
