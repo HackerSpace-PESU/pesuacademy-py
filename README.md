@@ -6,7 +6,7 @@ The wrapper requires the user's credentials to authenticate and provide **read-o
 information accessible on the PESU Academy website. Without the credentials, the wrapper will only be able to fetch 
 details from the `Know Your Class and Section` page.
 
-> :warning: **Warning:** This is not an official API and is not endorsed by PESU. Use at your own risk.
+> :warning: **Warning:** This is not an official API and is not endorsed by PES University. Use at your own risk.
 
 ## Installation
 
