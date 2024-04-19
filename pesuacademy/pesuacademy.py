@@ -32,11 +32,11 @@ class PESUAcademy:
         return self._authenticated
 
     def generate_csrf_token(
-            self, username: Optional[str] = None, password: Optional[str] = None
+        self, username: Optional[str] = None, password: Optional[str] = None
     ) -> str:
         """
         Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.
-        
+
         :param username: Your SRN, PRN or email address.
         :param password: Your password.
         :return: The CSRF token.
@@ -147,7 +147,7 @@ class PESUAcademy:
     def attendance(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
         """
         Get the attendance in courses of the currently authenticated user.
-        
+
         :param semester: The semester number. If not provided, attendance across all semesters are returned.
         :return: The attendance information for the given semester.
         """

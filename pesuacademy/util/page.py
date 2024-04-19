@@ -54,7 +54,7 @@ class PageHandler:
         self._semester_ids = semesters
 
     def get_semester_ids_from_semester_number(
-            self, semester: Optional[int] = None
+        self, semester: Optional[int] = None
     ) -> dict:
         """
         Get the semester ids from the semester number. If semester is not provided, all semester ids are returned.
@@ -62,7 +62,7 @@ class PageHandler:
         :return: The semester ids mapping.
         """
         assert (
-                semester is None or 1 <= semester <= 8
+            semester is None or 1 <= semester <= 8
         ), "Semester number should be between 1 and 8."
         return (
             self._semester_ids

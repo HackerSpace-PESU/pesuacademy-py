@@ -42,7 +42,7 @@ def get_data_from_section(soup: BeautifulSoup) -> dict:
 
 
 def create_class_and_section_object_from_know_your_class_and_section(
-        soup: BeautifulSoup,
+    soup: BeautifulSoup,
 ) -> ClassAndSectionInfo:
     """
     Create a ClassAndSectionInfo object from the Know Your Class and Section page.
@@ -63,7 +63,7 @@ def create_class_and_section_object_from_know_your_class_and_section(
 
 
 def create_personal_details_object_from_profile_page(
-        soup: BeautifulSoup,
+    soup: BeautifulSoup,
 ) -> PersonalDetails:
     """
     Create a PersonalDetails object from the Profile page.
@@ -75,7 +75,7 @@ def create_personal_details_object_from_profile_page(
         "div", attrs={"class": "elem-info-wrapper box-shadow clearfix"}
     )
     for element in personal_details_section.find_all(
-            "div", attrs={"class": "form-group"}
+        "div", attrs={"class": "form-group"}
     ):
         key = element.find(
             "label",
@@ -127,7 +127,7 @@ def create_personal_details_object_from_profile_page(
 
 
 def create_other_information_object_from_profile_page(
-        soup: BeautifulSoup,
+    soup: BeautifulSoup,
 ) -> OtherInformation:
     """
     Create an OtherInformation object from the Profile page.
@@ -149,7 +149,7 @@ def create_other_information_object_from_profile_page(
 
 
 def create_qualifying_examination_object_from_profile_page(
-        soup: BeautifulSoup,
+    soup: BeautifulSoup,
 ) -> QualifyingExamination:
     """
     Create a QualifyingExamination object from the Profile page.
@@ -172,7 +172,7 @@ def create_qualifying_examination_object_from_profile_page(
 
 
 def create_parent_details_object_from_profile_page(
-        soup: BeautifulSoup,
+    soup: BeautifulSoup,
 ) -> ParentDetails:
     """
     Create a ParentDetails object from the Profile page.
@@ -184,7 +184,7 @@ def create_parent_details_object_from_profile_page(
         "div", attrs={"class": "elem-info-wrapper box-shadow clearfix"}
     )[1]
     for parent_section in parent_details_section.find_all(
-            "div", attrs={"class": "col-md-6"}
+        "div", attrs={"class": "col-md-6"}
     ):
         parent_data = get_data_from_section(parent_section)
         parent_type = "mother" if "mother_name" in parent_data else "father"
@@ -203,7 +203,7 @@ def create_parent_details_object_from_profile_page(
 
 
 def create_address_details_object_from_profile_page(
-        soup: BeautifulSoup,
+    soup: BeautifulSoup,
 ) -> AddressDetails:
     """
     Create an AddressDetails object from the Profile page.
