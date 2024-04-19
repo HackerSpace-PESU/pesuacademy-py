@@ -11,11 +11,13 @@ from .pages import profile, courses, attendance, utils
 class PESUAcademy:
     """
     A class to interact with PESU Academy website.
+    This class is the entrypoint to all the functionality in this module
     """
 
     def __init__(self, username: Optional[str] = None, password: Optional[str] = None):
         """
         Initialize the PESU Academy object.
+
         :param username: Your SRN, PRN or email address.
         :param password: Your password.
         """
@@ -31,8 +33,9 @@ class PESUAcademy:
     def get_semester_ids_from_semester_number(self, semester: Optional[int] = None) -> dict:
         """
         Get the semester ids from the semester number. If semester is not provided, all semester ids are returned.
+
         :param semester: The semester number.
-        :return:
+        :return: A Dictionary containing the mapping from the semester to the semester ID
         """
         assert semester is None or 1 <= semester <= 8, "Semester number should be between 1 and 8."
         return self._semester_ids if semester is None else {semester: self._semester_ids[semester]}
@@ -40,6 +43,7 @@ class PESUAcademy:
     def generate_csrf_token(self, username: Optional[str] = None, password: Optional[str] = None) -> str:
         """
         Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.
+
         :return: The CSRF token.
         """
         try:
@@ -82,6 +86,7 @@ class PESUAcademy:
     def know_your_class_and_section(self, username: str) -> Profile:
         """
         Get the publicly visible class and section information of a student from the Know Your Class and Section page.
+
         :param username: The SRN, PRN or email address of the student.
         :return: The profile information.
         """
@@ -123,6 +128,7 @@ class PESUAcademy:
     def profile(self) -> Profile:
         """
         Get the private profile information of the currently authenticated user.
+
         :return: The profile information.
         """
         if not self._authenticated:
@@ -133,6 +139,7 @@ class PESUAcademy:
     def courses(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
         """
         Get the courses of the currently authenticated user.
+
         :param semester: The semester number. If not provided, all courses across all semesters are returned.
         :return: The course information for the given semester.
         """
@@ -145,6 +152,7 @@ class PESUAcademy:
     def attendance(self, semester: Optional[int] = None) -> dict[int, list[Course]]:
         """
         Get the attendance in courses of the currently authenticated user.
+        
         :param semester: The semester number. If not provided, attendance across all semesters are returned.
         :return: The attendance information for the given semester.
         """
