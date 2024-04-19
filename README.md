@@ -13,6 +13,7 @@
 ![black.yml](https://github.com/HackerSpace-PESU/pesuacademy-py/actions/workflows/black.yml/badge.svg)
 ![python-package-pip.yml](https://github.com/HackerSpace-PESU/pesuacademy-py/actions/workflows/python-package-pip.yml/badge.svg)
 ![python-publish.yml](https://github.com/HackerSpace-PESU/pesuacademy-py/actions/workflows/python-publish.yml/badge.svg)
+![build-docs.yml](https://github.com/HackerSpace-PESU/pesuacademy-py/actions/workflows/build-docs.yml/badge.svg)
 
 Python wrapper and APIs for the PESU Academy website.
 
