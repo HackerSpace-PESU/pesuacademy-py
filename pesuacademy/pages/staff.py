@@ -134,9 +134,3 @@ class StaffPageHandler:
         return Pesu_Staff
 
 
-def main():
-    StaffPageHandler.get_staff_details()
-
-
-if __name__ == "__main__":
-    main()
