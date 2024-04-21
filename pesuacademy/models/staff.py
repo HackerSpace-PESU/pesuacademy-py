@@ -1,15 +1,19 @@
+from typing import Optional
+
+
+
 class Staff:
     def __init__(
         self,
         name: str,
         designation: str,  
-        education: list,
-        experience: list,
         campus: str,
         department: str,
-        domains: list,
-        Responsibilities: list, 
-        mail : str
+        mail : str,
+        domains: Optional[list]=None, 
+        responsibilities: Optional[list]=None, 
+        education:  Optional[list]=None,
+        experience: Optional[list]=None,
     ):
         self.name = name
         self.designation = designation
@@ -18,10 +22,8 @@ class Staff:
         self.department = department
         self.campus = campus
         self.domains = domains
-        self.Responsibilities = Responsibilities
         self.mail = mail
+        self.responsibilities = responsibilities
 
     def __str__(self):
         return f"{self.__dict__}"
-
-

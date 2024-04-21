@@ -1,26 +1,29 @@
 import time
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+# from selenium import webdriver
+# from selenium.webdriver.chrome.options import Options
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+from requests_html import HTMLSession
 import requests
 from bs4 import BeautifulSoup
 from ..models.staff import Staff  
-
 
 class StaffPageHandler:
     @staticmethod
     def get_staff_details() -> Staff:
         try:
             base_url = "https://staff.pes.edu/atoz/"
-            options = Options()
+            session=HTMLSession()
+            # options = Options()
             # options.add_argument("--disable-infobars")  
-            options.add_argument("--headless")
-            driver = webdriver.Chrome()  
+            # options.add_argument("--headless")
+            # driver = webdriver.Chrome()  
             for page_num in range(1, 23):
                 staff_url = f"{base_url}?page={page_num}"
-                response = requests.get(staff_url) 
+                response = session.get(staff_url) 
+                if response.status_code != 200:
+                    raise ConnectionError(f"Failed to fetch URL: {staff_url}")
                 soup=BeautifulSoup(response.text,"html.parser")    
                 staff_divs = soup.find_all('div', class_='staff-profile')
                 for staff_div in staff_divs:
@@ -29,11 +32,12 @@ class StaffPageHandler:
                         base_url_single_staff="https://staff.pes.edu/"
                         staff_url = anchor_tag['href']
                         request_path = base_url_single_staff + staff_url[1:]
-                        driver.get(request_path)
+                        # driver.get(request_path)
                         # time.sleep(3) 
-                        html = driver.page_source
-                        soup = BeautifulSoup(html, 'html.parser')
-                        PESU_STAFF=StaffPageHandler.get_details_from_url(request_path, driver)
+                        # html = driver.page_source
+                        # soup = BeautifulSoup(html, 'html.parser')
+                        # StaffPageHandler.get_details_from_url(request_path, session)
+                        PESU_STAFF=StaffPageHandler.get_details_from_url(request_path, session)
                         print(PESU_STAFF)
                         # return PESU_STAFF
 
@@ -42,15 +46,18 @@ class StaffPageHandler:
             print(f"Error occurred: {e}")
             raise ConnectionError("Unable to fetch staff data.")
         finally:
-            driver.quit()
-
+            session.close()
     @staticmethod
     def get_details_from_url(url, driver):
-        driver.get(url)
-        time.sleep(3) 
+        # driver.get(url)
+        # time.sleep(3) 
 
-        html = driver.page_source
-        soup = BeautifulSoup(html, 'html.parser')
+        # html = driver.page_source
+        session=HTMLSession()
+        response=session.get(url)
+        if response.status_code != 200:
+            raise ConnectionError(f"Failed to fetch URL: {url}")
+        soup = BeautifulSoup(response.text, 'html.parser')
         #name
         name_tag = soup.find('h4')
         name = name_tag.text.strip() if name_tag else None
@@ -103,14 +110,17 @@ class StaffPageHandler:
 
         #responsibilities
         responsibilities=[]
-        responsibilities_div=soup.find_all('div',class_="bookings-item-content fl-wrap")[3]
-        responsibilities_ul = responsibilities_div.findChild()
-        if responsibilities_ul:
-            responsibilities_li_elements=responsibilities_ul.find_all('li')
-            for li in responsibilities_li_elements:
-                responsibilities_paragraph=li.find('p')
-                responsibilities.append(responsibilities_paragraph.get_text(strip=True))
-    
+
+        responsibilities_div = soup.find('div', id='tab-responsibilities')
+        if(responsibilities_div is not None):
+            # print(len(responsibilities_div))
+            # print(responsibilities_div)
+            p_tags = responsibilities_div.find_all('p')
+            responsibilities = [p.text for p in p_tags]
+
+        # print(responsibilities)
+        # print()
+        
         Pesu_Staff=Staff(name,designation,professor_education,professor_experience,campus,department,domains,responsibilities,email)
         # Pesu_Staff.name=name
         # Pesu_Staff.designation=designation
@@ -124,3 +134,9 @@ class StaffPageHandler:
         return Pesu_Staff
 
 
+def main():
+    StaffPageHandler.get_staff_details()
+
+
+if __name__ == "__main__":
+    main()
