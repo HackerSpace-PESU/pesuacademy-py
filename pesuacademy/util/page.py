@@ -82,5 +82,16 @@ class PageHandler:
         semester_ids = self.get_semester_ids_from_semester_number(semester)
         return self.attendance_page_handler.get_page(self.__session, semester_ids)
 
-    def get_announcements(self, csrf_token: str):
-        return self.announcement_handler.get_page(self.__session, csrf_token)
+    def get_announcements(
+        self,
+        csrf_token: str,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+    ):
+        if start_date is not None:
+            start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+        if end_date is not None:
+            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+        return self.announcement_handler.get_page(
+            self.__session, csrf_token, start_date, end_date
+        )

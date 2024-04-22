@@ -156,11 +156,19 @@ class PESUAcademy:
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
 
-    def announcements(self) -> list[Announcement]:
+    def announcements(
+        self, start_date: Optional[str] = None, end_date: Optional[str] = None
+    ) -> list[Announcement]:
         """
         Get the announcements from the PESU Academy website.
 
+        :param start_date: The start date of the announcements to fetch in "yyyy-mm-dd" format. If not provided, all
+        announcements from the beginning are fetched.
+        :param end_date: The end date of the announcements to fetch in "yyyy-mm-dd" format. If not provided, all
+        announcements till the end are fetched.
         :return: The list of announcements.
         """
-        announcements = self.page_handler.get_announcements(self._csrf_token)
+        announcements = self.page_handler.get_announcements(
+            self._csrf_token, start_date, end_date
+        )
         return announcements

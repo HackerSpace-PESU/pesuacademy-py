@@ -1,5 +1,6 @@
 import datetime
 import re
+from typing import Optional
 
 import urllib3
 
@@ -85,7 +86,11 @@ class AnnouncementPageHandler:
         )
 
     def get_page(
-        self, session: requests_html.HTMLSession, csrf_token: str
+        self,
+        session: requests_html.HTMLSession,
+        csrf_token: str,
+        start_date: Optional[datetime.date] = None,
+        end_date: Optional[datetime.date] = None,
     ) -> list[Announcement]:
         url = "https://www.pesuacademy.com/Academy/s/studentProfilePESUAdmin"
         query = {
@@ -107,7 +112,13 @@ class AnnouncementPageHandler:
 
         announcements = list()
         for announcement_id in announcement_ids:
-            announcements.append(
-                self.get_announcement_by_id(session, csrf_token, announcement_id)
+            announcement = self.get_announcement_by_id(
+                session, csrf_token, announcement_id
             )
+            if start_date and announcement.date < start_date:
+                continue
+            if end_date and announcement.date > end_date:
+                continue
+            announcements.append(announcement)
+        announcements.sort(key=lambda x: x.date, reverse=True)
         return announcements
