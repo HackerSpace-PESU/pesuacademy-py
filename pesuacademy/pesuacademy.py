@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from pesuacademy import util
 from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
-from .models import Profile, ClassAndSectionInfo, Course
+from .models import Profile, ClassAndSectionInfo, Course, Announcement
 
 
 class PESUAcademy:
@@ -155,3 +155,12 @@ class PESUAcademy:
             raise AuthenticationError("You need to authenticate first.")
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
+
+    def announcements(self) -> list[Announcement]:
+        """
+        Get the announcements from the PESU Academy website.
+
+        :return: The list of announcements.
+        """
+        announcements = self.page_handler.get_announcements(self._csrf_token)
+        return announcements
