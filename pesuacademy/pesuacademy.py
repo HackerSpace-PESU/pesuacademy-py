@@ -4,6 +4,7 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from pesuacademy import util
+from pesuacademy.models.seating_info import SeatingInfo
 from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
 from .models import Profile, ClassAndSectionInfo, Course
@@ -155,3 +156,14 @@ class PESUAcademy:
             raise AuthenticationError("You need to authenticate first.")
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
+
+    def seating_info(self) -> list[SeatingInfo]:
+        """
+        Get the seating information of the currently authenticated user.
+
+        :return: The seating information.
+        """
+        if not self._authenticated:
+            raise AuthenticationError("You need to authenticate first.")
+        seating_info = self.page_handler.get_seating_info()
+        return seating_info
