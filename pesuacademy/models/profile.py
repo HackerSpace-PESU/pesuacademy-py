@@ -38,6 +38,7 @@ class PersonalDetails:
         branch: str,
         semester: str,
         section: str,
+        img: str,
         program: Optional[str] = None,
         email: Optional[str] = None,
         mobile: Optional[str] = None,
@@ -53,6 +54,7 @@ class PersonalDetails:
         self.section = section
         self.email = email
         self.mobile = mobile
+        self.img = img
         self.aadhar = aadhar
         self.name_as_in_aadhar = name_as_in_aadhar
 

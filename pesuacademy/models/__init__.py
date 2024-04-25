@@ -1,3 +1,4 @@
+from .announcement import Announcement
 from .course import Course, Attendance
 from .profile import (
     Profile,

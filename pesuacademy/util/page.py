@@ -14,6 +14,7 @@ class PageHandler:
         self.course_page_handler = pages.CoursesPageHandler()
         self.attendance_page_handler = pages.AttendancePageHandler()
         self.profile_page_handler = pages.ProfilePageHandler()
+        self.announcement_handler = pages.AnnouncementPageHandler()
 
     def set_semester_id_to_number_mapping(self, csrf_token: str):
         try:
@@ -80,3 +81,17 @@ class PageHandler:
     def get_attendance(self, semester: Optional[int] = None):
         semester_ids = self.get_semester_ids_from_semester_number(semester)
         return self.attendance_page_handler.get_page(self.__session, semester_ids)
+
+    def get_announcements(
+        self,
+        csrf_token: str,
+        start_date: Optional[str] = None,
+        end_date: Optional[str] = None,
+    ):
+        if start_date is not None:
+            start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
+        if end_date is not None:
+            end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+        return self.announcement_handler.get_page(
+            self.__session, csrf_token, start_date, end_date
+        )
