@@ -4,10 +4,16 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from pesuacademy import util
-from pesuacademy.models.seating_information import SeatingInformation
 from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
-from .models import Profile, ClassAndSectionInfo, Course, Announcement, Professor
+from .models import (
+    Profile,
+    ClassAndSectionInfo,
+    Course,
+    Announcement,
+    Professor,
+    SeatingInformation,
+)
 
 
 class PESUAcademy:
