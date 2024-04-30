@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pesuacademy package &mdash; pesuacademy-py v0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=2fea6348"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="PESU Academy API" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            pesuacademy-py
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">pesuacademy package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-pesuacademy.pesuacademy">pesuacademy.pesuacademy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy"><code class="docutils literal notranslate"><span class="pre">PESUAcademy</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.announcements"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.announcements()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.attendance"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.attendance()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.authenticated"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.authenticated</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.courses"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.courses()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.generate_csrf_token"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.generate_csrf_token()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.know_your_class_and_section"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.know_your_class_and_section()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.profile"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.profile()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pesuacademy.pesuacademy.PESUAcademy.seating_information"><code class="docutils literal notranslate"><span class="pre">PESUAcademy.seating_information()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pesuacademy-py</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">pesuacademy package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/pesuacademy-py.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pesuacademy-package">
+<h1>pesuacademy package<a class="headerlink" href="#pesuacademy-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pesuacademy.pesuacademy">
+<span id="pesuacademy-pesuacademy"></span><h2>pesuacademy.pesuacademy<a class="headerlink" href="#module-pesuacademy.pesuacademy" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pesuacademy.pesuacademy.</span></span><span class="sig-name descname"><span class="pre">PESUAcademy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A class to interact with PESU Academy website.
+This class is the entrypoint to all the functionality in this module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.announcements">
+<span class="sig-name descname"><span class="pre">announcements</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Announcement</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.announcements" title="Link to this definition"></a></dt>
+<dd><p>Get the announcements from the PESU Academy website.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>start_date</strong> – The start date of the announcements to fetch in “yyyy-mm-dd” format. If not provided, all</p>
+</dd>
+</dl>
+<p>announcements from the beginning are fetched.
+:param end_date: The end date of the announcements to fetch in “yyyy-mm-dd” format. If not provided, all
+announcements till the end are fetched.
+:return: The list of announcements.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.attendance">
+<span class="sig-name descname"><span class="pre">attendance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semester</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Course</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.attendance" title="Link to this definition"></a></dt>
+<dd><p>Get the attendance in courses of the currently authenticated user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>semester</strong> – The semester number. If not provided, attendance across all semesters are returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attendance information for the given semester.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.authenticated">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">authenticated</span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.authenticated" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.courses">
+<span class="sig-name descname"><span class="pre">courses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">semester</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Course</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.courses" title="Link to this definition"></a></dt>
+<dd><p>Get the courses of the currently authenticated user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>semester</strong> – The semester number. If not provided, all courses across all semesters are returned.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The course information for the given semester.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.generate_csrf_token">
+<span class="sig-name descname"><span class="pre">generate_csrf_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.generate_csrf_token" title="Link to this definition"></a></dt>
+<dd><p>Generate a CSRF token. If username and password are provided, authenticate and get the CSRF token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>username</strong> – Your SRN, PRN or email address.</p></li>
+<li><p><strong>password</strong> – Your password.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The CSRF token.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.know_your_class_and_section">
+<span class="sig-name descname"><span class="pre">know_your_class_and_section</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">username</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ClassAndSectionInfo</span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.know_your_class_and_section" title="Link to this definition"></a></dt>
+<dd><p>Get the publicly visible class and section information of a student from the Know Your Class and Section page.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>username</strong> – The SRN, PRN or email address of the student.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The profile information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.profile">
+<span class="sig-name descname"><span class="pre">profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Profile</span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.profile" title="Link to this definition"></a></dt>
+<dd><p>Get the private profile information of the currently authenticated user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The profile information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pesuacademy.pesuacademy.PESUAcademy.seating_information">
+<span class="sig-name descname"><span class="pre">seating_information</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">SeatingInformation</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#pesuacademy.pesuacademy.PESUAcademy.seating_information" title="Link to this definition"></a></dt>
+<dd><p>Get the seating information of the currently authenticated user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The seating information.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="PESU Academy API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, HackerSpace-PESU.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
