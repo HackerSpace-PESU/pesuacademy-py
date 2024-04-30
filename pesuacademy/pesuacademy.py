@@ -7,7 +7,7 @@ from pesuacademy import util
 from pesuacademy.models.seating_information import SeatingInformation
 from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
-from .models import Profile, ClassAndSectionInfo, Course
+from .models import Profile, ClassAndSectionInfo, Course, Announcement
 
 
 class PESUAcademy:
@@ -157,6 +157,7 @@ class PESUAcademy:
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
 
+
     def seating_information(self) -> list[SeatingInformation]:
         """
         Get the seating information of the currently authenticated user.
@@ -167,3 +168,20 @@ class PESUAcademy:
             raise AuthenticationError("You need to authenticate first.")
         seating_info = self.page_handler.get_seating_info()
         return seating_info
+
+    def announcements(
+        self, start_date: Optional[str] = None, end_date: Optional[str] = None
+    ) -> list[Announcement]:
+        """
+        Get the announcements from the PESU Academy website.
+
+        :param start_date: The start date of the announcements to fetch in "yyyy-mm-dd" format. If not provided, all
+        announcements from the beginning are fetched.
+        :param end_date: The end date of the announcements to fetch in "yyyy-mm-dd" format. If not provided, all
+        announcements till the end are fetched.
+        :return: The list of announcements.
+        """
+        announcements = self.page_handler.get_announcements(
+            self._csrf_token, start_date, end_date
+        )
+        return announcements
