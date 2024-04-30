@@ -1,3 +1,4 @@
+from .announcement import Announcement
 from .course import Course, Attendance
 from .profile import (
     Profile,
@@ -10,3 +11,4 @@ from .profile import (
     QualifyingExamination,
 )
 from .professor import Professor
+from .seating_information import SeatingInformation
