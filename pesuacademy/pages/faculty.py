@@ -66,7 +66,7 @@ class FacultyPageHandler:
     def get_staff_details() -> list[Professor]:
         try:
             base_url = "https://staff.pes.edu/atoz/"
-            session = HTMLSession()
+            session = requests_html.HTMLSession()
             response = session.get(base_url)
             if response.status_code != 200:
                 raise ConnectionError(f"Failed to fetch URL: {base_url}")
@@ -90,7 +90,7 @@ class FacultyPageHandler:
                         base_url_single_staff = "https://staff.pes.edu/"
                         staff_url = anchor_tag["href"]
                         request_path = base_url_single_staff + staff_url[1:]
-                        PESU_STAFF = StaffPageHandler.get_details_from_url(
+                        PESU_STAFF = FacultyPageHandler.get_details_from_url(
                             request_path, session
                         )
                         PESU_STAFF_LIST.append(PESU_STAFF)
