@@ -4,7 +4,7 @@ import requests_html
 from bs4 import BeautifulSoup
 
 from pesuacademy import util
-from pesuacademy.models.seating_info import SeatingInfo
+from pesuacademy.models.seating_information import SeatingInformation
 from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
 from .models import Profile, ClassAndSectionInfo, Course
@@ -157,7 +157,7 @@ class PESUAcademy:
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
 
-    def seating_info(self) -> list[SeatingInfo]:
+    def seating_information(self) -> list[SeatingInformation]:
         """
         Get the seating information of the currently authenticated user.
 

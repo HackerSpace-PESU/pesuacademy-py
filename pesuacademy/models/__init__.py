@@ -9,5 +9,4 @@ from .profile import (
     AddressDetails,
     QualifyingExamination,
 )
-
-from .seating_info import SeatingInfo
+from .seating_information import SeatingInformation

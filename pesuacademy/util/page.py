@@ -82,4 +82,4 @@ class PageHandler:
         return self.attendance_page_handler.get_page(self.__session, semester_ids)
 
     def get_seating_info(self):
-        return pages.SeatingInfoHandler.get_page(self.__session)
+        return pages.SeatingInformationHandler.get_page(self.__session)

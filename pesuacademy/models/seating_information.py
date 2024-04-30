@@ -1,4 +1,4 @@
-class SeatingInfo:
+class SeatingInformation:
     def __init__(
         self,
         name: str,
@@ -6,7 +6,7 @@ class SeatingInfo:
         date: str,
         time: str,
         terminal: str,
-        block: str
+        block: str,
     ):
         self.name = name
         self.course_code = course_code
