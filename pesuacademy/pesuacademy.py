@@ -157,7 +157,6 @@ class PESUAcademy:
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
 
-
     def seating_information(self) -> list[SeatingInformation]:
         """
         Get the seating information of the currently authenticated user.
