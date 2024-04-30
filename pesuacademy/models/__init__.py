@@ -10,3 +10,4 @@ from .profile import (
     AddressDetails,
     QualifyingExamination,
 )
+from .seating_information import SeatingInformation
