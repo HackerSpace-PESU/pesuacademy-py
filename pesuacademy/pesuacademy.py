@@ -165,18 +165,19 @@ class PESUAcademy:
 
     def faculty(
         self,
+        campus: Optional[str] = None,
         department: Optional[str] = None,
         designation: Optional[str] = None,
-        campus: Optional[str] = None,
     ) -> list[Professor]:
         """
         Get the faculty information of the university.
 
+        :param campus: The campus name.
         :param department: The department name.
         :param designation: The designation of the faculty.
         :return: The faculty information.
         """
-        faculty_info = self.page_handler.get_faculty(department, designation, campus)
+        faculty_info = self.page_handler.get_faculty(campus, department, designation)
         return faculty_info
 
     def seating_information(self) -> list[SeatingInformation]:

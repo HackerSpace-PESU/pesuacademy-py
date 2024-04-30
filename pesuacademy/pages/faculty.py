@@ -5,6 +5,63 @@ from pesuacademy.models.professor import Professor
 
 
 class FacultyPageHandler:
+    departments = {
+        "arch": "architecture",
+        "bt": "biotechnology",
+        "cv": "civil",
+        "cse": "computer-science",
+        "cse-aiml": "computer-science-AIML",
+        "ca": "computer-application",
+        "des": "design",
+        "eee": "electrical-&-electronics",
+        "ece": "electronics-&-communications",
+        "law": "law",
+        "me": "mechanical",
+        "ms": "management-studies",
+        "sh": "science-&-humanities",
+        "com": "commerce",
+        "psy": "psychology",
+        "cie": "centre-for-innovation-&-entrepreneurship",
+        "ps": "pharmaceutical-sciences",
+    }
+    campuses = ["rr", "ec", "hn"]
+
+    @staticmethod
+    def get_urls_from_campus_and_department(
+        campus: Optional[str], department: Optional[str]
+    ):
+        base_url = "https://staff.pes.edu/{campus}/atoz/{department}"
+        if department:
+            assert (
+                department in FacultyPageHandler.departments
+            ), "Invalid department provided."
+        if campus:
+            assert campus in FacultyPageHandler.campuses, "Invalid campus provided."
+
+        if not department and not campus:
+            urls = [base_url.format(campus="", department="")]
+        elif department and not campus:
+            urls = [
+                base_url.format(
+                    campus=campus, department=FacultyPageHandler.departments[department]
+                )
+                for campus in ["rr", "ec", "hn"]
+            ]
+        elif campus and not department:
+            urls = [
+                base_url.format(
+                    campus=campus, department=FacultyPageHandler.departments[department]
+                )
+                for department in FacultyPageHandler.departments
+            ]
+        else:
+            urls = [
+                base_url.format(
+                    campus=campus, department=FacultyPageHandler.departments[department]
+                )
+            ]
+        return urls
+
     @staticmethod
     def get_staff_details() -> list[Professor]:
         try:
@@ -143,24 +200,13 @@ class FacultyPageHandler:
     def get_page(
         self,
         session: requests_html.HTMLSession,
+        campus: Optional[str] = None,
         department: Optional[str] = None,
         designation: Optional[str] = None,
-        campus: Optional[str] = None,
     ) -> list[Professor]:
-        # TODO: Refactor this to use specific URLs: https://staff.pes.edu/rr/atoz/computer-science/
-        all_staff = self.get_staff_details()
-        filtered_staff = all_staff
-
-        if department:
-            # Filter staff by department
-            filtered_staff = [
-                staff for staff in filtered_staff if staff.department == department
-            ]
-
-        if designation:
-            # Filter staff by designation
-            filtered_staff = [
-                staff for staff in filtered_staff if staff.designation == designation
-            ]
-
-        return filtered_staff
+        urls = self.get_urls_from_campus_and_department(campus, department)
+        # TODO: Scrape the data from the URLs. Use the same session object provided.
+        # professors = list()
+        # for url in urls:
+        #     professors.extend(get_faculty(session, url))
+        # return professors

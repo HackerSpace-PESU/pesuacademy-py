@@ -85,12 +85,15 @@ class PageHandler:
 
     def get_faculty(
         self,
+        campus: Optional[str] = None,
         department: Optional[str] = None,
         designation: Optional[str] = None,
-        campus: Optional[str] = None,
     ):
         return self.faculty_page_handler.get_page(
-            self.__session, department, designation, campus
+            self.__session,
+            campus,
+            department,
+            designation,
         )
 
     def get_seating_information(self):
