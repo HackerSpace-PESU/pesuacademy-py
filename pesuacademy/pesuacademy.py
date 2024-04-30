@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from pesuacademy import util
 from pesuacademy.util.page import PageHandler
 from .exceptions import CSRFTokenError, AuthenticationError
-from .models import Profile, ClassAndSectionInfo, Course
+from .models import Profile, ClassAndSectionInfo, Course, Professor
 
 
 class PESUAcademy:
@@ -155,3 +155,19 @@ class PESUAcademy:
             raise AuthenticationError("You need to authenticate first.")
         attendance_info = self.page_handler.get_attendance(semester)
         return attendance_info
+
+    def faculty(
+        self,
+        department: Optional[str] = None,
+        designation: Optional[str] = None,
+        campus: Optional[str] = None,
+    ) -> list[Professor]:
+        """
+        Get the faculty information of the university.
+
+        :param department: The department name.
+        :param designation: The designation of the faculty.
+        :return: The faculty information.
+        """
+        faculty_info = self.page_handler.get_faculty(department, designation, campus)
+        return faculty_info

@@ -9,3 +9,4 @@ from .profile import (
     AddressDetails,
     QualifyingExamination,
 )
+from .professor import Professor

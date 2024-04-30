@@ -1,12 +1,12 @@
-from requests_html import HTMLSession
-import requests
 from bs4 import BeautifulSoup
-from ..models.staff import Staff
+import requests_html
+from typing import Optional
+from pesuacademy.models.professor import Professor
 
 
-class StaffPageHandler:
+class FacultyPageHandler:
     @staticmethod
-    def get_staff_details() -> list:
+    def get_staff_details() -> list[Professor]:
         try:
             base_url = "https://staff.pes.edu/atoz/"
             session = HTMLSession()
@@ -127,7 +127,7 @@ class StaffPageHandler:
         if responsibilities_div is not None:
             p_tags = responsibilities_div.find_all("p")
             responsibilities = [p.text for p in p_tags]
-        Pesu_Staff = Staff(
+        Pesu_Staff = Professor(
             name=name,
             designation=designation,
             education=professor_education,
@@ -135,15 +135,20 @@ class StaffPageHandler:
             department=department,
             campus=campus,
             domains=domains,
-            mail=email,
+            email=email,
             responsibilities=responsibilities,
         )
         return Pesu_Staff
 
-    @staticmethod
-    def get_staff(department=None, designation=None):
-        all_staff = StaffPageHandler.get_staff_details()
-        print(all_staff)
+    def get_page(
+        self,
+        session: requests_html.HTMLSession,
+        department: Optional[str] = None,
+        designation: Optional[str] = None,
+        campus: Optional[str] = None,
+    ) -> list[Professor]:
+        # TODO: Refactor this to use specific URLs: https://staff.pes.edu/rr/atoz/computer-science/
+        all_staff = self.get_staff_details()
         filtered_staff = all_staff
 
         if department:
@@ -159,14 +164,3 @@ class StaffPageHandler:
             ]
 
         return filtered_staff
-
-
-# def main():
-#     #usage
-#     cse_staff = StaffPageHandler.get_staff(department="Computer Science")
-#     for staff_member in cse_staff:
-#         print(staff_member.name)
-
-
-# if __name__ == "__main__":
-#     main()

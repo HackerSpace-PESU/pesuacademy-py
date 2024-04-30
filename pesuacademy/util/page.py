@@ -14,6 +14,7 @@ class PageHandler:
         self.course_page_handler = pages.CoursesPageHandler()
         self.attendance_page_handler = pages.AttendancePageHandler()
         self.profile_page_handler = pages.ProfilePageHandler()
+        self.faculty_page_handler = pages.FacultyPageHandler()
 
     def set_semester_id_to_number_mapping(self, csrf_token: str):
         try:
@@ -80,3 +81,13 @@ class PageHandler:
     def get_attendance(self, semester: Optional[int] = None):
         semester_ids = self.get_semester_ids_from_semester_number(semester)
         return self.attendance_page_handler.get_page(self.__session, semester_ids)
+
+    def get_faculty(
+        self,
+        department: Optional[str] = None,
+        designation: Optional[str] = None,
+        campus: Optional[str] = None,
+    ):
+        return self.faculty_page_handler.get_page(
+            self.__session, department, designation, campus
+        )
