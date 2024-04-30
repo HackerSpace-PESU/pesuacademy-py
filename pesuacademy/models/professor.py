@@ -3,16 +3,16 @@ from typing import Optional
 
 class Professor:
     def __init__(
-            self,
-            name: str,
-            designation: str,
-            campus: str,
-            department: str,
-            email: str,
-            domains: Optional[list] = None,
-            responsibilities: Optional[list] = None,
-            education: Optional[list] = None,
-            experience: Optional[list] = None,
+        self,
+        name: str,
+        designation: str,
+        campus: str,
+        department: str,
+        email: str,
+        domains: Optional[list] = None,
+        responsibilities: Optional[list] = None,
+        education: Optional[list] = None,
+        experience: Optional[list] = None,
     ):
         self.name = name
         self.designation = designation
