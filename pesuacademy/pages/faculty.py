@@ -63,45 +63,59 @@ class FacultyPageHandler:
         return urls
 
     @staticmethod
-    def get_staff_details() -> list[Professor]:
+    def get_all_faculty_ids_from_url(
+        session: requests_html.HTMLSession, url: str, page: int = 1
+    ) -> list[str]:
         try:
-            base_url = "https://staff.pes.edu/atoz/"
-            session = requests_html.HTMLSession()
-            response = session.get(base_url)
+            current_url = f"{url}?page={page}"
+            print("entered loop", page, current_url)
+            response = session.get(current_url)
             if response.status_code != 200:
-                raise ConnectionError(f"Failed to fetch URL: {base_url}")
-
-            soup = BeautifulSoup(response.text, "html.parser")
-            last_page_span = soup.find(
-                "span", {"aria-hidden": "true"}
-            )  # getting the last page from the pagination end
-            last_page_number = int(last_page_span.get_text())
-            PESU_STAFF_LIST = []
-            for page_num in range(1, last_page_number + 1):
-                print("Scraping page:", page_num)
-                staff_url = f"{base_url}?page={page_num}"
-                response = session.get(staff_url)
+                return []
+            else:
                 soup = BeautifulSoup(response.text, "html.parser")
+                if next_page := soup.find("a", class_="nextposts-link"):
+                    next_page_number = int(next_page["href"].split("?page=")[-1])
+                else:
+                    next_page_number = None
 
-                staff_divs = soup.find_all("div", class_="staff-profile")
-                for staff_div in staff_divs:
-                    anchor_tag = staff_div.find("a", class_="geodir-category-img_item")
-                    if anchor_tag:
-                        base_url_single_staff = "https://staff.pes.edu/"
-                        staff_url = anchor_tag["href"]
-                        request_path = base_url_single_staff + staff_url[1:]
-                        PESU_STAFF = FacultyPageHandler.get_details_from_url(
-                            request_path, session
+                print("Next page number", next_page_number)
+                faculty_divs = soup.find_all("div", class_="staff-profile")
+                faculty_ids = [
+                    div.find("a", class_="geodir-category-img_item")["href"].split("/")[
+                        -2
+                    ]
+                    for div in faculty_divs
+                ]
+                if next_page_number is not None:
+                    faculty_ids.extend(
+                        FacultyPageHandler.get_all_faculty_ids_from_url(
+                            session, url, next_page_number
                         )
-                        PESU_STAFF_LIST.append(PESU_STAFF)
+                    )
+                return faculty_ids
+        except Exception:
+            return []
 
-            return PESU_STAFF_LIST
+    @staticmethod
+    def get_faculty_by_id(
+        session: requests_html.HTMLSession, faculty_id: str
+    ) -> Professor:
+        url = f"https://staff.pes.edu/{faculty_id}"
+        response = session.get(url)
+        if response.status_code != 200:
+            raise ConnectionError(f"Failed to fetch URL: {url}")
 
-        except Exception as e:
-            print(f"Error occurred: {e}")
-            raise ConnectionError("Unable to fetch staff data.")
-        finally:
-            session.close()
+        soup = BeautifulSoup(response.text, "html.parser")
+        name = soup.find("h4").text.strip()
+        domains = [
+            item.text.strip()
+            for item in soup.select(
+                "#tab-teaching .bookings-item-content ul.ul-item-left li"
+            )
+        ]
+        designation = soup.find("h5").text.strip()
+        print()
 
     @staticmethod
     def get_details_from_url(url, session):
@@ -206,7 +220,14 @@ class FacultyPageHandler:
     ) -> list[Professor]:
         urls = self.get_urls_from_campus_and_department(campus, department)
         # TODO: Scrape the data from the URLs. Use the same session object provided.
-        # professors = list()
-        # for url in urls:
-        #     professors.extend(get_faculty(session, url))
-        # return professors
+        # TODO: Add search functionality for name: https://staff.pes.edu/atoz/list/?search={name}
+        professors: list[Professor] = list()
+        for url in urls:
+            faculty_ids = self.get_all_faculty_ids_from_url(session, url, page=1)
+            for faculty_id in faculty_ids:
+                professors.extend(self.get_faculty_by_id(session, faculty_id))
+        if designation is not None:
+            professors = list(
+                filter(lambda x: x.designation == designation, professors)
+            )
+        return professors
