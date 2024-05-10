@@ -4,7 +4,6 @@ from typing import Optional
 from pesuacademy.models.professor import Professor
 
 
-
 class FacultyPageHandler:
     departments = {
         "arch": "architecture",
@@ -220,56 +219,12 @@ class FacultyPageHandler:
         designation: Optional[str] = None,
     ) -> list[Professor]:
         urls = self.get_urls_from_campus_and_department(campus, department)
-        professors: list[Professor] = []
-        for url in urls:
-            response = session.get(url)
-            if response.status_code != 200:
-                raise ConnectionError(f"Failed to fetch URL: {url}")
-            soup = BeautifulSoup(response.text, "html.parser")
-            faculty_divs = soup.find_all("div", class_="staff-profile")
-            for faculty_div in faculty_divs:
-                anchor_tag = faculty_div.find("a", class_="geodir-category-img_item")
-                base_url_single_faculty = "https://staff.pes.edu/"
-                faculty_url = anchor_tag["href"]
-                request_path = base_url_single_faculty + faculty_url[1:]
-                professor = self.get_details_from_url(request_path, session)
-                professors.append(professor)
-            if designation:
-                professors = [professor for professor in professors if designation in professor.designation]
-        return professors
-
-
         # TODO: Add search functionality for name: https://staff.pes.edu/atoz/list/?search={name}
-    def get_faculty_by_name(self, name: str, session: requests_html.HTMLSession) -> list[Professor]:
-        professors: list[Professor] = []
-        url = f"https://staff.pes.edu/atoz/list/?search={name}"
-        response=session.get(url)
-        soup = BeautifulSoup(response.text, "html.parser")
-        # professor_names = [tag.text.strip() for tag in soup.find_all('h4')]
-        # print(professor_names)
-        soup = BeautifulSoup(response.text, "html.parser")
-        faculty_divs = soup.find_all("div", class_="col-md-3 left-padding-0")
-        for faculty_div in faculty_divs:
-            anchor_tag = faculty_div.find("a", class_="chat-contacts-item")
-            if anchor_tag:
-                faculty_url = anchor_tag["href"]
-                base_url_single_faculty = "https://staff.pes.edu"
-                request_path = base_url_single_faculty + faculty_url
-                professor = self.get_details_from_url(request_path, session)
-                print(professor)
-                professors.append(professor)
-        print(professors)
-        # return professors
-        # professors: list[Professor] = list()
-        # for url in urls:
-        #     faculty_ids = self.get_all_faculty_ids_from_url(session, url, page=1)
-        #     for faculty_id in faculty_ids:
-        #         professors.extend(self.get_faculty_by_id(session, faculty_id))
-        # if designation is not None:
-        #     professors = list(
-        #         filter(lambda x: x.designation == designation, professors)
-        #     )
-        # return professors
-
-
-
+        professors: list[Professor] = list()
+        for url in urls:
+            faculty_ids = self.get_all_faculty_ids_from_url(session, url, page=1)
+            for faculty_id in faculty_ids:
+                professor = self.get_faculty_by_id(session, faculty_id)
+                if designation is None or professor.designation == designation:
+                    professors.append(professor)
+        return professors
