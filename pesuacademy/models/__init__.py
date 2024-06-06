@@ -10,4 +10,5 @@ from .profile import (
     AddressDetails,
     QualifyingExamination,
 )
+from .professor import Professor
 from .seating_information import SeatingInformation
