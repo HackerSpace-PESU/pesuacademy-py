@@ -94,6 +94,7 @@ class FacultyPageHandler:
                         )
                     )
                 return faculty_ids
+            
         except Exception:
             return []
 
@@ -102,6 +103,7 @@ class FacultyPageHandler:
         session: requests_html.HTMLSession, faculty_id: str
     ) -> Professor:
         url = f"https://staff.pes.edu/{faculty_id}"
+        # print(url)
         response = session.get(url)
         if response.status_code != 200:
             raise ConnectionError(f"Failed to fetch URL: {url}")
@@ -115,26 +117,9 @@ class FacultyPageHandler:
             )
         ]
         designation = soup.find("h5").text.strip()
-        print()
-
-    @staticmethod
-    def get_details_from_url(url, session):
-        response = session.get(url)
-        if response.status_code != 200:
-            raise ConnectionError(f"Failed to fetch URL: {url}")
-        soup = BeautifulSoup(response.text, "html.parser")
-        # name
-        name_tag = soup.find("h4")
-        name = name_tag.text.strip() if name_tag else None
-        # domain
-        teaching_items = soup.select(
-            "#tab-teaching .bookings-item-content ul.ul-item-left li"
-        )
-        domains = [item.text.strip() for item in teaching_items]
-        # designation
-        designation = soup.find("h5")
-        designation = " ".join(designation.text.split())
-        # Education
+        designation = [d.strip() for d in designation.split(",")]
+        # print()
+         # Education
         professor_education = []
         education_section = soup.find_all("h3")
         education_section_filter = [
@@ -198,6 +183,7 @@ class FacultyPageHandler:
         if responsibilities_div is not None:
             p_tags = responsibilities_div.find_all("p")
             responsibilities = [p.text for p in p_tags]
+        
         Pesu_Staff = Professor(
             name=name,
             designation=designation,
@@ -210,6 +196,28 @@ class FacultyPageHandler:
             responsibilities=responsibilities,
         )
         return Pesu_Staff
+    
+    def get_faculty_by_name(self, name: str, session: requests_html.HTMLSession) -> list[Professor]:
+        professors: list[Professor] = []
+        url = f"https://staff.pes.edu/atoz/list/?search={name}"
+        response = session.get(url)
+        soup = BeautifulSoup(response.text, "html.parser")
+        faculty_divs = soup.find_all("div", class_="col-md-3 left-padding-0")
+
+        faculty_ids = [
+            div.find("a", class_="chat-contacts-item")["href"].split("/")[-2]
+            for div in faculty_divs
+        ]
+        print(faculty_ids)
+        # Retrieve details for each faculty ID
+        for faculty_id in faculty_ids:
+            professor = self.get_faculty_by_id(session, faculty_id)
+            if professor:
+                professors.append(professor)
+
+        return professors
+
+        
 
     def get_page(
         self,
@@ -217,14 +225,22 @@ class FacultyPageHandler:
         campus: Optional[str] = None,
         department: Optional[str] = None,
         designation: Optional[str] = None,
+        name:Optional[str] = None
     ) -> list[Professor]:
         urls = self.get_urls_from_campus_and_department(campus, department)
         # TODO: Add search functionality for name: https://staff.pes.edu/atoz/list/?search={name}
+        if name:
+            professors=self.get_faculty_by_name(name,session)
+            return professors
+        print(urls)
         professors: list[Professor] = list()
         for url in urls:
             faculty_ids = self.get_all_faculty_ids_from_url(session, url, page=1)
             for faculty_id in faculty_ids:
                 professor = self.get_faculty_by_id(session, faculty_id)
-                if designation is None or professor.designation == designation:
+                # print(professor.designation)
+                if designation is None or designation in professor.designation:
                     professors.append(professor)
         return professors
+
+
